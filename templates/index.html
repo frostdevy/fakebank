@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fakebank.lol – Fake Crypto Wallet</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="wallet-container">
+        <!-- Header -->
+        <div class="wallet-header">
+            <div class="logo">
+                <span class="logo-icon">🏦</span>
+                <span class="logo-text">fake<span>bank</span>.lol</span>
+            </div>
+            <span class="network-badge">🔷 BSC</span>
+        </div>
+
+        <!-- Main Wallet -->
+        <div class="main-wallet">
+            <div class="wallet-label">Main wallet</div>
+            <div class="account-name">Account 1</div>
+            <div class="balance-display">
+                $<span id="balance">0.00</span> <span class="usd">USD</span>
+            </div>
+        </div>
+
+        <!-- Alpha Tokens -->
+        <div class="section">
+            <div class="section-title">Tokeny Alpha</div>
+            <div class="token-list" id="tokenList">
+                <div class="token-item">ARX: <span class="value">1.23 USD</span></div>
+                <div class="token-item"><span class="value">0.27 USD</span> <span class="change positive">+1.00%</span></div>
+                <div class="token-item">QUQ: <span class="value">492.45 USD</span></div>
+            </div>
+        </div>
+
+        <!-- Crypto / NFTs -->
+        <div class="section">
+            <div class="section-title">Crypto</div>
+            <div class="badge-row">
+                <span class="badge">NFTs</span>
+                <span class="badge">Approvals</span>
+            </div>
+        </div>
+
+        <!-- Inactive Crypto -->
+        <div class="section inactive">
+            <div class="section-title">Niewaktywowano krypty</div>
+            <div class="inactive-text">Zarządzanie krypty</div>
+        </div>
+
+        <!-- Top Gainers -->
+        <div class="section">
+            <div class="section-title">Najwyższe wzrosty</div>
+            <div class="badge-row">
+                <span class="badge active">Memes</span>
+                <span class="badge">Real World Assets</span>
+                <span class="badge">AI</span>
+            </div>
+            <div class="meme-list">
+                <div class="meme-item">
+                    <span class="meme-name">5 najlepszych meme coinów i tokenów (wzrost ceny w ciągu 24 godz. w %)</span>
+                </div>
+                <div class="meme-item highlight">
+                    <span class="meme-name">Fartcoin</span>
+                    <span class="meme-change">0.14</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review -->
+        <div class="review-section">
+            <span>Enjoying the Extension?</span>
+            <span class="review-link">Leave us a review on Chrome Web Store</span>
+        </div>
+
+        <!-- Bottom Nav -->
+        <div class="bottom-nav">
+            <span class="nav-item active">Strona główna</span>
+            <span class="nav-item">Popularne</span>
+            <span class="nav-item">Swap</span>
+            <span class="nav-item">Earn</span>
+            <span class="nav-item">Discover</span>
+        </div>
+
+        <!-- Trust Wallet Button (3 kliknięcia) -->
+        <div class="trust-section">
+            <button class="trust-btn" id="trustBtn">
+                <span class="icon">🛡️</span>
+                <span>Połącz z Trust Wallet</span>
+            </button>
+            <div class="click-counter">
+                Kliknięcia: <span id="clickCount">0</span> / 3
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h2>✏️ Edit Balance</h2>
+            <p>Set new balance (USD)</p>
+            <div class="input-group">
+                <input type="number" id="balanceInput" step="0.01" value="0.00" min="0">
+                <span class="currency-label">USD</span>
+            </div>
+            <div class="modal-actions">
+                <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+                <button class="save-btn" onclick="saveBalance()">💾 Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let balance = 0.00;
+        let clickCount = 0;
+
+        // === DOM ===
+        const balanceDisplay = document.getElementById('balance');
+        const clickCountEl = document.getElementById('clickCount');
+        const trustBtn = document.getElementById('trustBtn');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const balanceInput = document.getElementById('balanceInput');
+
+        // === Load balance from server ===
+        async function loadBalance() {
+            try {
+                const res = await fetch('/api/balance');
+                const data = await res.json();
+                balance = data.balance || 0;
+                updateUI();
+            } catch (e) {
+                console.log('Using local balance');
+            }
+        }
+
+        // === Save balance to server ===
+        async function saveBalanceToServer(newBalance) {
+            try {
+                await fetch('/api/balance', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ balance: newBalance })
+                });
+            } catch (e) {
+                console.log('Balance saved locally only');
+            }
+        }
+
+        function updateUI() {
+            balanceDisplay.textContent = balance.toFixed(2);
+            clickCountEl.textContent = clickCount;
+        }
+
+        function openModal() {
+            balanceInput.value = balance.toFixed(2);
+            modalOverlay.classList.add('active');
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            resetTrustButton();
+        }
+
+        function resetTrustButton() {
+            if (clickCount === 0) {
+                trustBtn.innerHTML = `<span class="icon">🛡️</span><span>Połącz z Trust Wallet</span>`;
+                trustBtn.style.background = 'linear-gradient(135deg, #2973ff, #1a5adf)';
+                trustBtn.style.boxShadow = '0 8px 0 #0f3570, 0 4px 20px #2973ff33';
+            }
+        }
+
+        async function saveBalance() {
+            const val = parseFloat(balanceInput.value);
+            if (isNaN(val) || val < 0) {
+                alert('Enter a valid number (≥ 0)');
+                return;
+            }
+            balance = val;
+            updateUI();
+            await saveBalanceToServer(val);
+            closeModal();
+        }
+
+        // === Trust Wallet Click ===
+        trustBtn.addEventListener('click', function() {
+            clickCount++;
+            updateUI();
+
+            if (clickCount === 1) {
+                trustBtn.innerHTML = `<span class="icon">🛡️</span><span>Trust Wallet (1/3)</span>`;
+            } else if (clickCount === 2) {
+                trustBtn.innerHTML = `<span class="icon">🛡️</span><span>Trust Wallet (2/3)</span>`;
+            } else if (clickCount >= 3) {
+                trustBtn.innerHTML = `<span class="icon">🔓</span><span>✨ Edit Balance ✨</span>`;
+                trustBtn.style.background = 'linear-gradient(135deg, #f7931a, #e67e00)';
+                trustBtn.style.boxShadow = '0 8px 0 #b35900, 0 4px 30px #f7931a55';
+                setTimeout(() => openModal(), 300);
+                clickCount = 0;
+                updateUI();
+            }
+
+            if (navigator.vibrate) navigator.vibrate(20);
+        });
+
+        // === Modal events ===
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        balanceInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') saveBalance();
+        });
+
+        // === Init ===
+        loadBalance();
+    </script>
+</body>
+</html>
