@@ -1,0 +1,377 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background: #0a0e17;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    background-image: radial-gradient(ellipse at 50% 0%, #1a2744 0%, #0a0e17 70%);
+}
+
+.wallet-container {
+    max-width: 420px;
+    width: 100%;
+    background: linear-gradient(145deg, #131d2e, #0e1625);
+    border-radius: 2rem;
+    padding: 1.8rem 1.5rem 1.8rem;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px #2a3a55 inset;
+    border: 1px solid #2a3a5533;
+}
+
+/* Header */
+.wallet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-icon { font-size: 1.8rem; }
+.logo-text {
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: #f0f4ff;
+    letter-spacing: -0.5px;
+}
+.logo-text span { color: #f7931a; }
+
+.network-badge {
+    background: #1f2d45;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.65rem;
+    color: #8aadff;
+    border: 1px solid #2a3a55;
+    font-weight: 600;
+}
+
+/* Main Wallet */
+.main-wallet {
+    background: linear-gradient(135deg, #1a2744, #0f1a2e);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #2a3a55;
+    text-align: center;
+}
+
+.wallet-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #7a8fb0;
+    letter-spacing: 1px;
+}
+
+.account-name {
+    font-size: 1rem;
+    color: #a0b3cc;
+    margin: 0.2rem 0 0.5rem;
+}
+
+.balance-display {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #f0f4ff;
+    letter-spacing: -1px;
+}
+
+.balance-display .usd {
+    font-size: 1.2rem;
+    color: #7a8fb0;
+    font-weight: 600;
+}
+
+/* Sections */
+.section {
+    margin-bottom: 1.2rem;
+    padding: 0.8rem 1rem;
+    background: #111b2b;
+    border-radius: 1.2rem;
+    border: 1px solid #1a263a;
+}
+
+.section-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #6a8bb0;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.token-item {
+    color: #c8daf0;
+    font-size: 0.9rem;
+    padding: 0.2rem 0;
+}
+
+.token-item .value { color: #f0f4ff; font-weight: 600; }
+.token-item .change.positive { color: #00d4a0; font-weight: 600; margin-left: 0.5rem; }
+
+.badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.badge {
+    background: #1a263a;
+    padding: 0.3rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.75rem;
+    color: #8aadff;
+    border: 1px solid #2a3a55;
+}
+
+.badge.active {
+    background: #2a3d5a;
+    border-color: #4a6a8a;
+    color: #f0f4ff;
+}
+
+.inactive {
+    opacity: 0.6;
+}
+
+.inactive-text {
+    color: #4a6a8a;
+    font-size: 0.8rem;
+}
+
+.meme-list {
+    margin-top: 0.5rem;
+}
+
+.meme-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.3rem 0;
+    color: #a0b3cc;
+    font-size: 0.85rem;
+}
+
+.meme-item.highlight {
+    color: #f0f4ff;
+    font-weight: 600;
+}
+
+.meme-change {
+    color: #00d4a0;
+    font-weight: 700;
+}
+
+/* Review */
+.review-section {
+    text-align: center;
+    padding: 0.8rem;
+    font-size: 0.7rem;
+    color: #6a8bb0;
+    border-top: 1px solid #1a263a;
+    margin: 0.5rem 0 0.8rem;
+}
+
+.review-link {
+    display: block;
+    color: #8aadff;
+    font-weight: 600;
+    margin-top: 0.2rem;
+    cursor: pointer;
+}
+
+/* Bottom Nav */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5rem 0;
+    border-top: 1px solid #1a263a;
+    margin-top: 0.5rem;
+}
+
+.nav-item {
+    color: #4a6a8a;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.nav-item.active {
+    color: #f7931a;
+}
+
+.nav-item:hover {
+    color: #8aadff;
+}
+
+/* Trust Button */
+.trust-section {
+    margin-top: 1.2rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid #1a263a;
+}
+
+.trust-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #2973ff, #1a5adf);
+    border: none;
+    border-radius: 1.2rem;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 6px 0 #0f3570, 0 4px 20px #2973ff33;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+.trust-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 0 #0f3570, 0 8px 30px #2973ff55;
+}
+
+.trust-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #0f3570;
+}
+
+.trust-btn .icon { font-size: 1.4rem; }
+
+.click-counter {
+    text-align: center;
+    font-size: 0.7rem;
+    color: #4a6a8a;
+    margin-top: 0.4rem;
+}
+
+.click-counter span {
+    color: #f7931a;
+    font-weight: 700;
+}
+
+/* Modal */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal {
+    background: #161f31;
+    border-radius: 2rem;
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+    border: 1px solid #2a3a55;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+}
+
+.modal h2 {
+    color: #f0f4ff;
+    font-size: 1.3rem;
+    margin-bottom: 0.2rem;
+}
+
+.modal p {
+    color: #8aadff;
+    font-size: 0.85rem;
+    margin-bottom: 1.2rem;
+}
+
+.input-group {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border-radius: 1.2rem;
+    border: 1px solid #2a3a55;
+    background: #0e1625;
+    color: #f0f4ff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: #f7931a;
+    box-shadow: 0 0 20px #f7931a22;
+}
+
+.currency-label {
+    color: #8aadff;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+}
+
+.modal-actions button {
+    flex: 1;
+    padding: 0.8rem;
+    border-radius: 1.2rem;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.95rem;
+}
+
+.save-btn {
+    background: #f7931a;
+    color: #0a0e17;
+}
+
+.save-btn:hover {
+    background: #ffa833;
+    transform: scale(1.02);
+}
+
+.cancel-btn {
+    background: #1f2d45;
+    color: #8aadff;
+    border: 1px solid #2a3a55;
+}
+
+.cancel-btn:hover {
+    background: #2a3d5a;
+}
+
+@media (max-width: 460px) {
+    .balance-display { font-size: 2.2rem; }
+    .wallet-container { padding: 1.2rem; }
+}
